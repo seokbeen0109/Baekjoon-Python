@@ -1,51 +1,28 @@
-import java.util.*;
-
 class Solution {
     public int solution(int n, int[] lost, int[] reserve) {
-        boolean[] hasClothes = new boolean[n + 2];
+        int answer = n;
+        int[] people = new int[n];
         
-        for (int i = 1; i <= n; i++) {
-            hasClothes[i] = true;
+        for(int l:lost){
+            people[l-1]--;
+        }
+        for (int r:reserve){
+            people[r-1]++;
         }
         
-        boolean[] isLost = new boolean[n + 2];
-        boolean[] isReserve = new boolean[n + 2];
-        
-        for (int l : lost) {
-            isLost[l] = true;
-        }
-        for (int r : reserve) {
-            isReserve[r] = true;
-        }
-        
-        // 도난당했으면서 여벌도 있는 학생은 서로 상쇄 (아무 일도 없었던 것처럼)
-        for (int i = 1; i <= n; i++) {
-            if (isLost[i] && isReserve[i]) {
-                isLost[i] = false;
-                isReserve[i] = false;
-            }
-        }
-        
-        // 남은 lost 학생을 순회하며 앞/뒤 reserve 학생에게 빌리기
-        for (int i = 1; i <= n; i++) {
-            if (isLost[i]) {
-                if (i - 1 >= 1 && isReserve[i - 1]) {
-                    isReserve[i - 1] = false;
-                    isLost[i] = false;
-                } else if (i + 1 <= n && isReserve[i + 1]) {
-                    isReserve[i + 1] = false;
-                    isLost[i] = false;
+        for (int i=0; i<people.length; i++){
+            if(people[i]==-1){
+                if(i-1>=0 && people[i-1] ==1){
+                    people[i]++;
+                    people[i-1]--;
+                } else if (i+1<people.length && people[i+1]==1){
+                    people[i]++;
+                    people[i+1]--;
+                } else {
+                    answer --;
                 }
             }
         }
-        
-        int answer = 0;
-        for (int i = 1; i <= n; i++) {
-            if (!isLost[i]) {
-                answer++;
-            }
-        }
-        
         return answer;
     }
 }
