@@ -1,14 +1,6 @@
-# 선수 이름 participant
-# 완주한 선수 completion
-
+from collections import Counter
 def solution(participant, completion):
-    hash={}
-    for p in participant:
-        hash[p]=hash.get(p,0)+1
-    for c in completion:
-        hash[c]+=-1
-    for key in hash:
-        if hash[key]>0:
-            return key
-    answer = ''
-    return answer
+    p_counter = Counter(participant)
+    c_counter = Counter(completion)
+    answer=p_counter-c_counter
+    return list(answer.keys())[0]
