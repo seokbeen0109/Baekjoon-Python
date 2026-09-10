@@ -1,4 +1,4 @@
 -- 코드를 작성해주세요
-SELECT COUNT(*) FISH_COUNT
-FROM FISH_INFO
-WHERE TIME LIKE('2021%')
+select count(id) as FISH_COUNT
+from FISH_INFO
+where year(time)=2021
