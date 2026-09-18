@@ -1,7 +1,8 @@
 def solution(phone_book):
-    phone = set(phone_book)
-    for number in phone:
-        for i in range(1,len(number)):
-            if number[:i] in phone:
-                return False
-    return True
+    phone_book.sort()
+    
+    for i in range(len(phone_book)-1):
+        if phone_book[i+1].startswith(phone_book[i]):
+            return False
+    answer = True
+    return answer
